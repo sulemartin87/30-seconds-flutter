@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class Game extends StatefulWidget {
@@ -19,10 +21,51 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
+  Timer _timer;
+  int _start = 30;
+  int _initial = 30;
   var defaultTextStyle = const TextStyle(fontSize: 30);
   var _selection = [true, false];
-  var _timer = 30;
-  var items = ['saasd', 'asdas', 'asdasd', 'dsadasda', 'asdasfedfgjidskl'];
+  var items = [
+    {'name': 'saasdaa', 'selected': false},
+    {'name': 'saasdaa', 'selected': false},
+    {'name': 'saasaad', 'selected': false},
+    {'name': 'saasddasdas', 'selected': false},
+    {'name': 'ssdadaasd', 'selected': false},
+  ];
+  var _score = '';
+  void startTimer() {
+    if (_timer != null) {
+      _timer.cancel();
+      _timer = null;
+    } else {
+      _timer = new Timer.periodic(
+        const Duration(seconds: 1),
+        (Timer timer) => setState(
+          () {
+            if (_start < 1) {
+              timer.cancel();
+              //put logic for showing score
+              var score =
+                  items.where((element) => element['selected'] == true).length;
+              setState(() {
+                _score = 'Your team score is $score';
+              });
+            } else {
+              _start = _start - 1;
+            }
+          },
+        ),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -58,7 +101,7 @@ class _GameState extends State<Game> {
                       //borderRadius: new BorderRadius.circular(30.0),
                       color: Colors.blue,
                     ),
-                    child: new Text('$_timer',
+                    child: new Text('$_start',
                         style: new TextStyle(
                             color: Colors.white,
                             fontSize:
@@ -67,6 +110,7 @@ class _GameState extends State<Game> {
                   ), //............
                 ),
               ),
+              Text(_score),
               _buildCard()
             ],
           ),
@@ -90,23 +134,25 @@ class _GameState extends State<Game> {
                   // Provide a builder function. This is where the magic happens.
                   // Convert each item into a widget based on the type of item it is.
                   itemBuilder: (context, index) {
-                    final item = items[index];
+                    var item = items[index];
 
                     return Column(
                       children: [
                         ListTile(
                           title: Text(
-                            item != null ? item : '',
+                            item['name'],
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
-                          tileColor: Colors.white,
-                          leading: Icon(
-                            Icons.restaurant_menu,
-                            color: Colors.white,
-                          ),
-                          trailing: Checkbox(
-                            value: true,
-                          ),
+                          tileColor: item['selected']
+                              ? Colors.red.shade300
+                              : Colors.white,
+
+                          // trailing: Checkbox(
+                          //   value: item['selected'],
+                          // ),
+                          onTap: () {
+                            item['selected'] = !item['selected'];
+                          },
                         ),
                         Divider(),
                       ],
