@@ -19,7 +19,7 @@ class Preferences extends StatefulWidget {
 }
 
 class _PreferencesState extends State<Preferences> {
-  var defaultTextStyle = const TextStyle(fontSize: 30);
+  var defaultTextStyle = const TextStyle(fontSize: 25);
   var _selection = [true, false];
   @override
   Widget build(BuildContext context) {
@@ -42,22 +42,28 @@ class _PreferencesState extends State<Preferences> {
             children: <Widget>[
               Text('Number of teams', style: defaultTextStyle),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                padding: EdgeInsets.symmetric(horizontal: 100, vertical: 16),
                 child: TextField(
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
                   decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
                     border: OutlineInputBorder(),
-                    hintText: 'Enter number of teams',
                   ),
                 ),
               ),
               Text('Number of steps', style: defaultTextStyle),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    const EdgeInsets.symmetric(horizontal: 100, vertical: 16),
                 child: TextField(
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
                   decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
                     border: OutlineInputBorder(),
-                    labelText: 'Enter number of steps',
                   ),
                 ),
               ),
@@ -66,13 +72,20 @@ class _PreferencesState extends State<Preferences> {
                 child: Text('Use dice handicap', style: defaultTextStyle),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(3.0),
                 child: ToggleButtons(
+                  // fillColor: Colors.white,
+                  // borderColor: Colors.black,
+                  fillColor: Colors.grey,
+                  borderWidth: 2,
+                  selectedBorderColor: Colors.black,
+                  selectedColor: Colors.white,
+                  borderRadius: BorderRadius.circular(0),
+                  // textStyle: defaultTextStyle,
                   children: <Widget>[
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Icon(Icons.thumb_up),
                         SizedBox(
                           height: 5.0,
                         ),
@@ -82,7 +95,6 @@ class _PreferencesState extends State<Preferences> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Icon(Icons.thumb_down),
                         SizedBox(
                           height: 5.0,
                         ),
@@ -90,7 +102,6 @@ class _PreferencesState extends State<Preferences> {
                       ],
                     )
                   ],
-                  selectedColor: Colors.blue,
                   onPressed: (int index) {
                     setState(() {
                       for (int buttonIndex = 0;

@@ -45,7 +45,6 @@ class _GameState extends State<Game> {
           () {
             if (_start < 1) {
               timer.cancel();
-              //put logic for showing score
               var score =
                   items.where((element) => element['selected'] == true).length;
               setState(() {
@@ -125,7 +124,7 @@ class _GameState extends State<Game> {
           Container(
             color: Colors.blue,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(30.0),
               child: SizedBox(
                 height: 300,
                 child: ListView.builder(
